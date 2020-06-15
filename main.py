@@ -1,10 +1,9 @@
 import pygame
 import random
 import os
+import sys
 import time
 import neat
-import visualize
-import pickle
 
 pygame.font.init()  # Init font in pygame
 pygame.mixer.init() # Init Mixer in pygame
@@ -13,9 +12,10 @@ pygame.mixer.init() # Init Mixer in pygame
 WIN_WIDTH = 600
 WIN_HEIGHT = 800
 FLOOR = 730
-STAT_FONT = pygame.font.SysFont(os.path.join('assets/font', 'flappy_bird.ttf'), 50)
-END_FONT = pygame.font.SysFont(os.path.join('assets/font', 'flappy_bird.ttf'), 70)
-DRAW_LINES = False
+STAT_FONT = pygame.font.Font(os.path.join('assets/font', 'flappy_bird.ttf'), 50)
+END_FONT = pygame.font.Font(os.path.join('assets/font', 'flappy_bird.ttf'), 70)
+DRAW_LINES = True
+FRAMES = 60
 
 # Creating Window and Setting Title
 WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
@@ -245,7 +245,7 @@ def draw_window(win, birds, pipes, base, score, gen, pipe_ind):
 
 
 # Default structure of the function that is provided to neat lib
-def evaluation(genomes, config):
+def play(genomes, config):
    
     global WIN, gen
     win = WIN
@@ -274,7 +274,7 @@ def evaluation(genomes, config):
 
     run = True
     while run and len(birds) > 0:
-        clock.tick(30) # Can be changed to make game run faster
+        clock.tick(FRAMES) # Can be changed to make game run faster
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -355,13 +355,8 @@ def evaluation(genomes, config):
 
         draw_window(WIN, birds, pipes, base, score, gen, pipe_ind)
 
-        # break if score gets large enough
-        if score > 20:
-            pickle.dump(nets[0],open("best.pickle", "wb"))
-            break
 
-
-def run():
+def run_trainer():
 
     # Loading the config file needed to initialize neat-python...
     # ...contains fitness limit, population size, activation function etc
@@ -378,11 +373,11 @@ def run():
     p.add_reporter(stats)
 
     # Max number of generations to run this trainer for (50 here) along with the eval func
-    winner = p.run(evaluation, 50)
+    winner = p.run(play, 50)
 
     # Gives the final output of the best genome produced
     print('\nBest Genome:\n{!s}'.format(winner))
 
 
-if __name__ == '__main__':
-    run()
+if __name__=='__main__':
+    run_trainer()
