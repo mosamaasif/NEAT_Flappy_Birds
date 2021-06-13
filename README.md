@@ -95,9 +95,7 @@ To get a local copy up and running follow these simple steps.
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`If you are using alias then python would work as well, otherwise python3 should be used.`
 
 ### Output Images
-* AI in Action
   <img src="images/run.gif">
-* Console Outputs details of generation etc.
   <img src="images/console.png">
   
   
