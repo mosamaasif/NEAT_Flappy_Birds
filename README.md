@@ -96,7 +96,9 @@ To get a local copy up and running follow these simple steps.
 
 ### Output Images
 * AI in Action
-  <img src="images/out_1.png">
+  <img src="images/run.gif">
+* Console Outputs details of generation etc.
+  <img src="images/console.png">
   
   
 <!-- LICENSE -->
